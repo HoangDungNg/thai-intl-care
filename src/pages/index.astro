@@ -1,12 +1,50 @@
 ---
-import { ReviewGallery } from "../components/ImageGallery";
+import { Title } from "@/components/Title";
+import { Text } from "@/components/Text";
 import Layout from "../layouts/Layout.astro";
-
+import { StackedImages } from "@/components/StackedImagesDemo";
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const sampleImages = [
+  {
+    id: "1",
+    src: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&h=900&fit=crop",
+    title: "Mountain Serenity",
+    description:
+      "Witness the breathtaking beauty of alpine landscapes where earth meets sky.",
+  },
+  {
+    id: "2",
+    src: "https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&h=900&fit=crop",
+    title: "Forest Pathways",
+    description:
+      "Discover the tranquil depths of ancient woodlands and hidden trails.",
+  },
+  {
+    id: "3",
+    src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=900&fit=crop",
+    title: "Coastal Dreams",
+    description:
+      "Experience the endless horizon where ocean waves dance with golden light.",
+  },
+  {
+    id: "4",
+    src: "https://images.unsplash.com/photo-1511593358241-7eea1f3c84e5?w=1200&h=900&fit=crop",
+    title: "Desert Solitude",
+    description:
+      "Journey through vast expanses of sand and stone under infinite skies.",
+  },
+  {
+    id: "5",
+    src: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=900&fit=crop",
+    title: "Peak Experience",
+    description:
+      "Reach new heights where the air is crisp and the views are unforgettable.",
+  },
+];
 ---
 
 <Layout>
   <!-- <Welcome /> -->
-  <ReviewGallery />
+  <StackedImages images={sampleImages} />
 </Layout>
