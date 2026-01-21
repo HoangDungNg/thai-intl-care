@@ -80,18 +80,17 @@ export const StackedImages3D: React.FC<StackedImages3DProps> = ({
   return (
     <div ref={containerRef} className="relative w-full py-20">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="relative" style={{ perspective: "1000px" }}>
+        <div className="stack stack-bottom" style={{ perspective: "1000px" }}>
           {images.map((image, index) => (
             <div
               key={image.id}
               ref={(el) => (cardsRef.current[index] = el)}
               className="sticky top-32"
               style={{
-                zIndex: index,
                 transformStyle: "preserve-3d",
               }}
             >
-              <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-white mb-8">
+              <div className="relative overflow-hidden rounded-2xl shadow-2xl bg-base-100 mb-8">
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={image.src}
@@ -113,7 +112,7 @@ export const StackedImages3D: React.FC<StackedImages3DProps> = ({
                   </div>
                 </div>
 
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-black/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-base-300 pointer-events-none" />
               </div>
             </div>
           ))}
