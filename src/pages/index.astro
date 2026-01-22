@@ -3,6 +3,7 @@ import { Title } from "@/components/Title";
 import { Text } from "@/components/Text";
 import Layout from "../layouts/Layout.astro";
 import { Image } from "@/components/Image";
+import CustomImage from "@/components/CustomImage.astro";
 
 import { StackedImages3D } from "@/components/StackedImages3D";
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
@@ -53,5 +54,17 @@ const sampleImages = [
   <StackedImages3D images={sampleImages} />
   <!-- <StackedImages images={sampleImages} /> -->
   <div style="height: 800px;"></div>
-  <Image aspectRatio="portrait" src="https://picsum.dev/540/675" alt="" />
+  <Image
+    client:load
+    aspectRatio="portrait"
+    src="https://picsum.dev/540/675"
+    alt=""
+  />
+  <CustomImage
+    aspectRatio="portrait"
+    src="https://picsum.photos/540/675"
+    alt=""
+    width={540}
+    height={675}
+  />
 </Layout>

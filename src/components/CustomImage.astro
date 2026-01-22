@@ -1,0 +1,78 @@
+---
+import { Image } from "astro:assets";
+import type { ComponentProps } from "astro/types";
+import { cx } from "@/utils/cx";
+
+type CustomImageProps = {
+  skeleton?: boolean;
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "full";
+  aspectRatio?: "square" | "video" | "portrait" | "landscape";
+  rounded?: boolean | "sm" | "md" | "lg" | "full";
+  shadow?: boolean | "sm" | "md" | "lg" | "xl";
+  bordered?: boolean;
+  objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
+} & ComponentProps<typeof Image>;
+
+const {
+  skeleton = true,
+  size = "md",
+  aspectRatio,
+  rounded,
+  shadow,
+  bordered,
+  objectFit = "cover",
+  class: className,
+  ...props
+} = Astro.props as CustomImageProps;
+---
+
+<div
+  class={cx(
+    "relative overflow-hidden",
+    skeleton && "animate-pulse bg-gray-200",
+    className,
+    {
+      // Size
+      "w-16": size === "xs",
+      "w-32": size === "sm",
+      "w-64": size === "md",
+      "w-96": size === "lg",
+      "w-[32rem]": size === "xl",
+      "w-full": size === "full",
+
+      // Aspect ratio
+      "aspect-square": aspectRatio === "square",
+      "aspect-video": aspectRatio === "video",
+      "aspect-[3/4]": aspectRatio === "portrait",
+      "aspect-[4/3]": aspectRatio === "landscape",
+
+      // Border
+      "border border-gray-200": bordered,
+
+      // Rounded
+      rounded: rounded === true,
+      "rounded-sm": rounded === "sm",
+      "rounded-md": rounded === "md",
+      "rounded-lg": rounded === "lg",
+      "rounded-full": rounded === "full",
+
+      // Shadow
+      shadow: shadow === true,
+      "shadow-sm": shadow === "sm",
+      "shadow-md": shadow === "md",
+      "shadow-lg": shadow === "lg",
+      "shadow-xl": shadow === "xl",
+    },
+  )}
+>
+  <Image
+    {...props}
+    class={cx("h-full w-full", {
+      "object-contain": objectFit === "contain",
+      "object-cover": objectFit === "cover",
+      "object-fill": objectFit === "fill",
+      "object-none": objectFit === "none",
+      "object-scale-down": objectFit === "scale-down",
+    })}
+  />
+</div>

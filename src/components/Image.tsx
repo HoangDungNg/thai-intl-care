@@ -1,3 +1,4 @@
+import { cx } from "@/utils/cx";
 import React, { useState, type ImgHTMLAttributes } from "react";
 
 export interface ImageProps extends Omit<
@@ -39,8 +40,8 @@ export interface ImageProps extends Omit<
   // Effects
   rounded?: boolean | "sm" | "md" | "lg" | "full";
   shadow?: boolean | "sm" | "md" | "lg" | "xl";
-  bordered?: boolean;
   // Object fit
+  bordered?: boolean;
   objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
   // Loading skeleton
   showSkeleton?: boolean;
@@ -116,6 +117,7 @@ export const Image: React.FC<ImageProps> = ({
 
   // Handle image load
   const handleLoad = () => {
+    console.log("Image loaded");
     setIsLoading(false);
   };
 
@@ -132,48 +134,43 @@ export const Image: React.FC<ImageProps> = ({
     }
   };
 
-  // Build class names
-  const imageClasses = [
+  const imageClasses = cx(
     sizeClasses[size],
-    aspectRatio && aspectRatioClasses[aspectRatio],
     getRoundedClass(),
     getShadowClass(),
-    bordered && "border border-base-300",
     objectFitClasses[objectFit],
-    mask && `mask mask-${mask}`,
-    isLoading && showSkeleton ? "opacity-0" : "opacity-100",
     "transition-opacity duration-300",
+    {
+      [aspectRatioClasses[aspectRatio!]]: Boolean(aspectRatio),
+      ["border border-base-300"]: bordered,
+      [`mask mask-${mask}`]: Boolean(mask),
+    },
+    isLoading && showSkeleton ? "opacity-0" : "opacity-100",
     className,
-  ]
-    .filter(Boolean)
-    .join(" ");
+  );
 
-  const containerClasses = ["relative inline-block", containerClassName]
-    .filter(Boolean)
-    .join(" ");
+  const containerClasses = cx("relative inline-block", containerClassName);
 
   return (
     <div className={containerClasses}>
       {/* Loading skeleton */}
       {isLoading && showSkeleton && (
         <div
-          className={[
+          className={cx(
             "absolute inset-0 animate-pulse bg-base-300",
             getRoundedClass(),
-            mask && `mask mask-${mask}`,
-          ]
-            .filter(Boolean)
-            .join(" ")}
+            { [`mask mask-${mask}`]: Boolean(mask) },
+          )}
         />
       )}
 
       {/* Error state or placeholder */}
       {hasError && !fallbackSrc ? (
         <div
-          className={[
+          className={cx(
             "flex items-center justify-center bg-base-200 text-base-content",
             imageClasses,
-          ].join(" ")}
+          )}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

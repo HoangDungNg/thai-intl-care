@@ -52,6 +52,7 @@ export const StackedImages3D: React.FC<StackedImages3DProps> = ({
             start: "top bottom-=100",
             end: "top center",
             scrub: 1,
+            markers: true,
           },
         });
 
