@@ -1,0 +1,41 @@
+---
+import { onMount } from "astro";
+import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+onMount(() => {
+  const container = document.querySelector("#stacked-container");
+  const images = gsap.utils.toArray<HTMLElement>(".stacked-img");
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: container,
+      start: "top top",
+      end: `+=${images.length * 800}`, // Adjust based on number of images
+      scrub: true,
+      pin: true,
+    },
+  });
+
+  images.forEach((img, i) => {
+    tl.fromTo(img, { yPercent: 100 }, { yPercent: 0, ease: "none" }, i * 0.5);
+  });
+});
+---
+
+<div id="stacked-container" class="relative h-screen">
+  <div class="h-full flex flex-col items-center justify-center">
+    {
+      Array.from({ length: 4 }).map((_, i) => (
+        <img
+          src={`https://picsum.dev/600/400?seed=${i}`}
+          alt={`Stack ${i + 1}`}
+          class="stacked-img w-[600px] h-[400px] shadow-lg"
+          style={`margin-top: ${i === 0 ? "0px" : "-300px"}; z-index: ${10 + i};`}
+        />
+      ))
+    }
+  </div>
+</div>

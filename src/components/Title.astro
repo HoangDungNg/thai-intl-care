@@ -1,0 +1,29 @@
+---
+import { cx } from "@/utils/cx";
+
+type TitleLevel = 1 | 2 | 3 | 4 | 5 | 6;
+
+type Props = {
+  className?: string;
+  level?: TitleLevel;
+  as?: keyof HTMLElementTagNameMap; // "div" | "h1" | "h2" | ...
+};
+
+const TITLE_LEVEL_CLASS: Record<TitleLevel, string> = {
+  6: "text-lg",
+  5: "text-xl",
+  4: "text-2xl",
+  3: "text-3xl",
+  2: "text-4xl",
+  1: "text-5xl",
+};
+
+const { level = 1, className, as = "div" } = Astro.props as Props;
+
+// Astro supports dynamic tag names by assigning to a capitalized variable
+const Component = as;
+---
+
+<Component class={cx(TITLE_LEVEL_CLASS[level], "font-bold", className)}>
+  <slot />
+</Component>

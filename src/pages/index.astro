@@ -1,11 +1,9 @@
 ---
-import { Title } from "@/components/Title";
-import { Text } from "@/components/Text";
-import Layout from "../layouts/Layout.astro";
-import { Image } from "@/components/Image";
+import Text from "@/components/Text.astro";
+import Title from "@/components/Title.astro";
+import Layout from "@/layouts/Layout.astro";
 import CustomImage from "@/components/CustomImage.astro";
 
-import { StackedImages3D } from "@/components/StackedImages3D";
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 const sampleImages = [
   {
@@ -47,24 +45,16 @@ const sampleImages = [
 ---
 
 <Layout>
-  <!-- <Welcome /> -->
-  <!-- <StackedImages images={sampleImages} /> -->
-  <!-- <StackedImagesAdvanced images={sampleImages} /> -->
-  <!-- <GsapDemo /> -->
-  <StackedImages3D images={sampleImages} />
-  <!-- <StackedImages images={sampleImages} /> -->
-  <div style="height: 800px;"></div>
-  <Image
-    client:load
-    aspectRatio="portrait"
-    src="https://picsum.dev/540/675"
-    alt=""
-  />
   <CustomImage
     aspectRatio="portrait"
     src="https://picsum.photos/540/675"
     alt=""
     width={540}
     height={675}
+    size="md"
   />
+  <Title>This is title</Title>
+  <Text as="p" className="text-neutral-600"> This is some text. </Text>
+
+  <Text as="p" className="text-neutral-600"> This is some text. </Text>
 </Layout>

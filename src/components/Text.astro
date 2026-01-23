@@ -1,0 +1,17 @@
+---
+import { cx } from "@/utils/cx";
+
+type Props = {
+  className?: string;
+  as?: keyof HTMLElementTagNameMap; // "div" | "p" | "span" | ...
+};
+
+const { className, as = "div" } = Astro.props as Props;
+
+// Dynamic tag name
+const Component = as;
+---
+
+<Component class={cx("text-base font-light", className)}>
+  <slot />
+</Component>

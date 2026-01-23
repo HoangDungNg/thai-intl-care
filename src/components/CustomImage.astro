@@ -11,11 +11,11 @@ type CustomImageProps = {
   shadow?: boolean | "sm" | "md" | "lg" | "xl";
   bordered?: boolean;
   objectFit?: "contain" | "cover" | "fill" | "none" | "scale-down";
-} & ComponentProps<typeof Image>;
+} & Omit<ComponentProps<typeof Image>, "size">;
 
 const {
   skeleton = true,
-  size = "md",
+  size = "full",
   aspectRatio,
   rounded,
   shadow,
@@ -24,9 +24,18 @@ const {
   class: className,
   ...props
 } = Astro.props as CustomImageProps;
+
+// class={cx("h-full w-full", {
+//   "object-contain": objectFit === "contain",
+//   "object-cover": objectFit === "cover",
+//   "object-fill": objectFit === "fill",
+//   "object-none": objectFit === "none",
+//   "object-scale-down": objectFit === "scale-down",
+// })}
 ---
 
 <div
+  data-image-wrapper
   class={cx(
     "relative overflow-hidden",
     skeleton && "animate-pulse bg-gray-200",
@@ -67,12 +76,8 @@ const {
 >
   <Image
     {...props}
-    class={cx("h-full w-full", {
-      "object-contain": objectFit === "contain",
-      "object-cover": objectFit === "cover",
-      "object-fill": objectFit === "fill",
-      "object-none": objectFit === "none",
-      "object-scale-down": objectFit === "scale-down",
-    })}
+    class="w-full h-auto object-cover"
+    sizes="100vw"
+    onload="this.closest('[data-image-wrapper]')?.classList.remove('animate-pulse', 'bg-gray-200')"
   />
 </div>
